@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\LGED.Core\LGED.Core.csproj" />
+    <ProjectReference Include="..\..\Data\LGED.Data\LGED.Data.csproj" />
+    <ProjectReference Include="..\..\Domain\LGED.Domain\LGED.Domain.csproj" />
+    <ProjectReference Include="..\..\Library\LGED.Library\LGED.Library.csproj" />
+    <ProjectReference Include="..\..\Model\LGED.Model\LGED.Model.csproj" />
+  </ItemGroup>
+
+</Project>
