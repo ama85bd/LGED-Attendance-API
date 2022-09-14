@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LGED.Core.Interfaces
 {
-    public interface IUserContext
+    public abstract class IUserContext
     {
         public abstract Guid UserId { get; }
         public abstract string UserName { get; }
