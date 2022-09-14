@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <ItemGroup>
-    <ProjectReference Include="..\..\Model\LGED.Model\LGED.Model.csproj" />
+    <ProjectReference Include="..\..\Model\LGED.Model\LGED.Model.csproj"/>
   </ItemGroup>
-
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.123"/>
+  </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
 </Project>

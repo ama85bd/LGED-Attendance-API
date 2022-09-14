@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LGED.Core.Interfaces
 {
-    public class IEntityBase
+    public interface IEntityBase
     {
         Guid Id { get; set; }
         bool IsDeleted { get; set; }

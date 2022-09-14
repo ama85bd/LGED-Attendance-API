@@ -16,6 +16,11 @@ namespace LGED.Model.Context
         public LgedDbContext(DbContextOptions options): base(options)
         {
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+        }
         public DbSet<Student> Students { get; set; }
     }
 }

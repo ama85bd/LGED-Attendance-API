@@ -1,15 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <ItemGroup>
-    <ProjectReference Include="..\..\Model\LGED.Model\LGED.Model.csproj" />
-    <ProjectReference Include="..\..\Data\LGED.Data\LGED.Data.csproj" />
-    <ProjectReference Include="..\..\Library\LGED.Library\LGED.Library.csproj" />
+    <ProjectReference Include="..\..\Model\LGED.Model\LGED.Model.csproj"/>
+    <ProjectReference Include="..\..\Data\LGED.Data\LGED.Data.csproj"/>
+    <ProjectReference Include="..\..\Library\LGED.Library\LGED.Library.csproj"/>
   </ItemGroup>
-
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="10.0.1"/>
+    <PackageReference Include="AutoMapper" Version="11.0.1"/>
+  </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
 </Project>

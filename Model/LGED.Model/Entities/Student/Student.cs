@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGED.Model.Entities.Student
 {
-    public class Student
+    public class Student: EntityBase
     {
         public int StudentId { get; set; }
         [Required]
