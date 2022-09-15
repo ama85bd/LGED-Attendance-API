@@ -9,11 +9,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LGED.Web.Controllers.StudentController
 {
+    [ApiController]
     public class CreateUpdateStudentController : BaseController
     {
         public CreateUpdateStudentController(ILogger<BaseController> logger, IMediator mediator, IUserContext context) : base(logger, mediator, context)
         {
         }
+
+        /// <summary>
+        /// Add student List
+        /// </summary>
+        /// <returns>List of Search student</returns>
 
         [HttpPost("addstudent")]
         public async Task<IActionResult> GetProcessDataPagedList(CreateUpdateStudentCommand command)

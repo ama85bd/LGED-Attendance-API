@@ -17,6 +17,7 @@ namespace LGED.Data.Base
         public LgedDbContext LgedDbContext { get; set; }
         public UnitOfWork(LgedDbContext context)
         {
+            LgedDbContext=context;
         }
 
         private StudentRepository _studentRepository;

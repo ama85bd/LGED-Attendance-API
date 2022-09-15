@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using LGED.Core.Constants;
@@ -8,6 +9,7 @@ using LGED.Core.Interfaces;
 using LGED.Data.Base;
 using LGED.Domain.Base;
 using LGED.Model.Context;
+using LGED.Web.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -55,23 +57,38 @@ namespace API
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             //add cross origin rules
-            services.AddCors(opt =>
+
+            services.AddCors(opt => 
             {
-                opt.AddPolicy("CorsPolicy", policy =>
+                opt.AddPolicy("CorsPolicy", policy => 
                 {
-                    policy.AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .WithExposedHeaders("WWW-Authenticate")
-                        .WithOrigins(Configuration.GetSection("CorsOrigins").Get<string[]>())
-                        .AllowCredentials();
+                    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
                 });
             });
+
+            // services.AddCors(opt =>
+            // {
+            //     opt.AddPolicy("CorsPolicy", policy =>
+            //     {
+            //         policy.AllowAnyHeader()
+            //             .AllowAnyMethod()
+            //             .WithExposedHeaders("WWW-Authenticate")
+            //             .WithOrigins(Configuration.GetSection("CorsOrigins").Get<string[]>())
+            //             .AllowCredentials();
+            //     });
+            // });
 
             // services.AddControllers();
             services.AddMediatR(typeof(CommandBase<>).Assembly);
 
+            //add request culture
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("ms-MY");
+                options.SupportedCultures = new List<CultureInfo> { new CultureInfo("en-US"), new CultureInfo("ms-MY") };
+            });
 
-//add slug transformation
+            //add slug transformation
             services.AddMvc(options =>
                 {
                     //slugify the name of controller
@@ -104,16 +121,16 @@ namespace API
             //add swagger
             services.ConfigureSwagger();
 
-            //add automapper
+            // //add automapper
             services.ConfigureAutoMapper();
             
             var connectionString =
                 Configuration["ConnectionStrings:DefaultConnection"]; // => load connection string from secrets
             services.AddDbContext<LgedDbContext>(c => c.UseSqlServer(connectionString));
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIv5", Version = "v1" });
-            });
+            // services.AddSwaggerGen(c =>
+            // {
+            //     c.SwaggerDoc("v1", new OpenApiInfo { Title = "LGED-API-v1", Version = "v1" });
+            // });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -143,7 +160,7 @@ else
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint(AppConstants.PluginUrl.Swagger + "/v1/swagger.json", "CDBM API V1");
+                c.SwaggerEndpoint(AppConstants.PluginUrl.Swagger + "/v1/swagger.json", "LGED API V1");
                 //c.OAuthAppName("");
                 c.EnableFilter();
                 c.DefaultModelRendering(ModelRendering.Model);
