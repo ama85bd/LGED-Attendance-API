@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using NetTopologySuite.Geometries;
 
 namespace LGED.Model.Entities.Profile
 {
@@ -10,6 +12,10 @@ namespace LGED.Model.Entities.Profile
         public string Name { get; set; }
         public bool IsActive { get; set; }
         public string Code { get; set; }
+        
+        [JsonIgnore]
+        public Point ? Location { get; set; }
+        
         public string? ShortName { get; set; }
         public string Description { get; set; }
         public string? RegistrationNumber { get; set; }

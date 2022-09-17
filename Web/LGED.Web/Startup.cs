@@ -112,6 +112,7 @@ namespace API
                         NoStore = true,
                         Location = ResponseCacheLocation.None
                     });
+                    
                 }).AddNewtonsoftJson(options =>
                 {
                     //exclude looping values
@@ -133,7 +134,7 @@ namespace API
             
             var connectionString =
                 Configuration["ConnectionStrings:DefaultConnection"]; // => load connection string from secrets
-            services.AddDbContext<LgedDbContext>(c => c.UseSqlServer(connectionString));
+            services.AddDbContext<LgedDbContext>(c => c.UseSqlServer(connectionString,x => x.UseNetTopologySuite()));
 
             
             //add identity

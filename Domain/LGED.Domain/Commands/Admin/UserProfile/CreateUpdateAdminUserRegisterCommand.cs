@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using LGED.Domain.Base;
+using NetTopologySuite.Geometries;
 
 namespace LGED.Domain.Commands.Admin.UserProfile
 {
@@ -20,5 +22,7 @@ namespace LGED.Domain.Commands.Admin.UserProfile
         public string UserType { get; set; }
         [MaxLength(20)]
         public string ContactNumber { get; set; }
+        // [JsonIgnore]
+        public Point ? Location { get; set; }
     }
 }

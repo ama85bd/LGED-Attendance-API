@@ -48,6 +48,7 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
                     Description = command.Department,
                     ContactNumber = command.ContactNumber,
                     Department = command.Department,
+                    Location = command.Location,
                     Type = "N/A",
                     IsActive = true
                 };
@@ -78,7 +79,7 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
                     InsertedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow,
                     Remarks = command.Department,
-                    IsActive = true,
+                    IsActive = false,
                     IsReceiveIowEmails = true,
                     IsReceiveDataAnomEmails = true,
                     IsReceiveCreepRemaningEmails = true
