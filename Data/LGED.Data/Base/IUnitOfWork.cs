@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LGED.Data.Repository;
+using LGED.Data.Repository.Profile;
 using LGED.Model.Context;
 
 namespace LGED.Data.Base
@@ -12,7 +13,10 @@ namespace LGED.Data.Base
         public LgedDbContext LgedDbContext { get; set; }
 
         StudentRepository StudentRepository { get; }
-
+        UserRepository UserRepository { get; }
+        UserRolesRepository UserRolesRepository { get; }
+        RoleRepository RoleRepository { get; }
+        CompanyRepository CompanyRepository { get; }
          bool Commit();
          Task<bool> CommitAsync();
 

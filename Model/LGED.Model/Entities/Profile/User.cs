@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace LGED.Model.Entities.Profile
 {
-    public class User: IdentityUser<Guid>
+    public class User: IdentityUser<Guid>, IEntityBase
     {
         public User()
         {
@@ -18,8 +18,8 @@ namespace LGED.Model.Entities.Profile
         public sealed override Guid Id { get; set; }
 
         public string UserId { get; set; }  // nguyenhai.nam
-        public string FirstName { get; set; } //Nguyen
-        public string LastName { get; set; } //Hai Nam
+        public string? FirstName { get; set; } //Nguyen
+        public string? LastName { get; set; } //Hai Nam
         //public override string Email { get; set; } // using email from IdentityUser
         public string DisplayName { get; set; } // Nguyen Hai Nam
         //public int LoginFailConsecutive { get; set; } // => use AccessFailedCount of IdentityUser instead
@@ -27,8 +27,8 @@ namespace LGED.Model.Entities.Profile
         public string Remarks { get; set; }
         public bool IsActive { get; set; }
         public string UserType { get; set; } // Internal / External
-        public string StaffId { get; set; } //C0000026
-        public string Culture { get; set; } //Vietnam
+        public string? StaffId { get; set; } //C0000026
+        public string? Culture { get; set; } //Vietnam
         public DateTime? LastSyncFromAd { get; set; } //last date sync from active directory, each 7 days from new login
         public bool IsDeleted { get; set; }
         public Guid InsertedBy { get; set; }

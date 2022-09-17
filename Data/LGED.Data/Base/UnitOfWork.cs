@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using LGED.Data.Repository;
+using LGED.Data.Repository.Profile;
 using LGED.Model.Context;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,27 @@ namespace LGED.Data.Base
         {
             get { return _studentRepository ??= new StudentRepository(LgedDbContext); }
         }
+        private UserRepository _userRepository;
+         public UserRepository UserRepository
+        {
+            get { return _userRepository ??= new UserRepository(LgedDbContext); }
+        }
+        private UserRolesRepository _userRolesRepository;
+          public UserRolesRepository UserRolesRepository
+        {
+            get { return _userRolesRepository ??= new UserRolesRepository(LgedDbContext); }
+        }
+        private RoleRepository _roleRepository;
+          public RoleRepository RoleRepository
+        {
+            get { return _roleRepository ??= new RoleRepository(LgedDbContext); }
+        }
+        private CompanyRepository _companyRepository;
+          public CompanyRepository CompanyRepository
+        {
+            get { return _companyRepository ??= new CompanyRepository(LgedDbContext); }
+        }
+
 
         public bool Commit()
         {

@@ -2,18 +2,24 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using LGED.Core.Constants;
 using LGED.Core.Helper;
 using LGED.Core.Interfaces;
 using LGED.Data.Base;
 using LGED.Domain.Base;
+using LGED.Model.Common;
 using LGED.Model.Context;
+using LGED.Model.Entities.Profile;
 using LGED.Web.Extensions;
+using LGED.Web.Middleware;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -22,6 +28,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.SwaggerUI;
@@ -127,6 +134,59 @@ namespace API
             var connectionString =
                 Configuration["ConnectionStrings:DefaultConnection"]; // => load connection string from secrets
             services.AddDbContext<LgedDbContext>(c => c.UseSqlServer(connectionString));
+
+            
+            //add identity
+            services.AddIdentity<User, Role>()
+                .AddEntityFrameworkStores<LgedDbContext>()
+                .AddUserStore<LgedUserRoleStore>()
+                .AddUserManager<LgedUserManager>()
+                .AddSignInManager<SignInManager<User>>()
+                .AddDefaultTokenProviders();
+
+            //add authentication  
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                //add jwt
+                .AddJwtBearer(options =>
+                {
+                    options.SaveToken = true;
+                    options.RequireHttpsMetadata = false;
+                    var tokenValidatorParams = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidAudience = Configuration[AppConfigs.InternalIdServer.ValidAudience],
+                        ValidIssuer = Configuration[AppConfigs.InternalIdServer.ValidIssuer],
+                        IssuerSigningKey =
+                            new SymmetricSecurityKey(
+                                Encoding.UTF8.GetBytes(Configuration[AppConfigs.InternalIdServer.Secret]))
+                    };
+                    options.TokenValidationParameters = tokenValidatorParams;
+                    //SignalR: transmit the access-token in the query string to the request context for authentication with jwt
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            if (context.Request.Path.StartsWithSegments(AppConstants.PluginUrl.Hub))
+                            {
+                                var accessToken = context.Request.Query["access_token"];
+
+                                if (!string.IsNullOrEmpty(accessToken))
+                                {
+                                    context.Token = accessToken;
+                                }
+                            }
+                            return Task.CompletedTask;
+                        }
+                    };
+                });
+
+                
             // services.AddSwaggerGen(c =>
             // {
             //     c.SwaggerDoc("v1", new OpenApiInfo { Title = "LGED-API-v1", Version = "v1" });
@@ -150,9 +210,28 @@ else
 
             app.UseRouting();
             app.UseCors("CorsPolicy");
+
             // //use resource static files such as images, css, js...
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            
+            app.UseAuthentication();
+
+            // Enable custom middle ware for wrapping response, binding user context, and handling exception
+            // Must placed after authentication and before authorization to bind user context
+            app.UseApiWrapperMiddleware(new ApiWrapperMiddlewareOptions
+            {
+                //exclude these paths
+                ExcludePaths = new List<string>
+                {
+                    AppConstants.PluginUrl.Swagger,
+                    AppConstants.PluginUrl.HangFire,
+                    AppConstants.PluginUrl.Manager,
+                    AppConstants.PluginUrl.Attachment,
+                    AppConstants.PluginUrl.Hub
+                },
+                Version = "1.0a"
+            });
 
             app.UseAuthorization();
 

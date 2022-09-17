@@ -10,19 +10,19 @@ namespace LGED.Model.Entities.Profile
         public string Name { get; set; }
         public bool IsActive { get; set; }
         public string Code { get; set; }
-        public string ShortName { get; set; }
+        public string? ShortName { get; set; }
         public string Description { get; set; }
-        public string RegistrationNumber { get; set; }
+        public string? RegistrationNumber { get; set; }
         public string ContactNumber { get; set; }
-        public string FaxNumber { get; set; }
-        public string Url { get; set; }
+        public string? FaxNumber { get; set; }
+        public string? Url { get; set; }
         public string Department { get; set; }
-        public string State { get; set; }
-        public string Address { get; set; }
-        public string Address2 { get; set; }
-        public string City { get; set; }
-        public string PostCode { get; set; }
-        public string Country { get; set; }
+        public string ?State { get; set; }
+        public string? Address { get; set; }
+        public string? Address2 { get; set; }
+        public string? City { get; set; }
+        public string ?PostCode { get; set; }
+        public string? Country { get; set; }
         // Division or Company
         public string Type { get; set; }
         // Self-join

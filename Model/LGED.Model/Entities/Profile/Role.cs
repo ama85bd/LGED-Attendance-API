@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 namespace LGED.Model.Entities.Profile
 {
     [Serializable]
-    public class Role: IdentityRole<Guid>
+    public class Role: IdentityRole<Guid>, IEntityBase
     {
         public Role()
         {

@@ -21,6 +21,8 @@ namespace LGED.Model.Context
         {
             optionsBuilder.UseLazyLoadingProxies();
         }
+
+        public DbSet<Company> Company { get; set; }
         public DbSet<Student> Students { get; set; }
     }
 }

@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LGED.Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace LGED.Model.Entities.Profile
 {
-    public class UserRoles: IdentityUserRole<Guid>
+    public class UserRoles: IdentityUserRole<Guid>, IEntityBase
     {
         public Guid CompanyId { get; set; }
         public virtual Company Company { get; set; }

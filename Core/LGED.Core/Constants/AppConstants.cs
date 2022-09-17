@@ -9,13 +9,9 @@ namespace LGED.Core.Constants
     {
         public static class Role
         {
-            public const string MasterAdministrator = "Master Administrator";
-            public const string ClientProjectManager = "ClientProjectManager";
-            public const string ProjectTechnicalAuthority = "Project Technical Authority(MCI)";
-            public const string ClientPMT = "Client PMT";
-            public const string TechnicalAuthority = "Technical Authority(MCI)";
-            public const string DisciplineEngineer = "Discipline Engineer";
-            public const string CDBMEngineer = "CDBM Engineer";
+            public const string MasterAdministrator = "Master Admin";
+            public const string Admin = "Admin";
+            public const string Normal = "Normal";
         }
 
         public static List<string> AdminRoles = new List<string> { Role.MasterAdministrator };
