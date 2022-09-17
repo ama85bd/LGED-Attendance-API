@@ -1,0 +1,66 @@
+## To create new solution file inside main folder (run bellow cmd in terminal)
+-dotnet new sln
+
+## To create webapi go to inside that folder
+-dotnet new webapi -n LGED.Web
+
+## To create class library go to inside that folder
+-dotnet new classlib -n LGED.Core
+
+## Add this project into solution
+-dotnet sln add Web/LGED.Web 
+
+## Add dependency one folder to another folder
+-dotnet add reference ../../Core/LGED.Core 
+
+### install package ###
+-> go to Model folder
+=> 
+Microsoft.EntityFrameworkCore,
+Microsoft.EntityFrameworkCore.SqlServer
+Microsoft.EntityFrameworkCore.Tools
+Microsoft.AspNetCore.Identity
+Microsoft.AspNetCore.Identity.EntityFrameworkCore
+Microsoft.EntityFrameworkCore.Proxies
+
+-> go to Web folder
+=> 
+Microsoft.EntityFrameworkCore.Design
+MediatR
+MediatR.Extensions.Microsoft.DependencyInjection
+Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation
+Microsoft.AspNetCore.Mvc.NewtonsoftJson
+AutoMapper.Extensions.Microsoft.DependencyInjection
+Microsoft.EntityFrameworkCore
+Swashbuckle.AspNetCore.Annotations
+Swashbuckle.AspNetCore.Filters
+System.Data.SqlClient
+Microsoft.AspNetCore.Authentication.JwtBearer
+
+-> go to Domain folder
+=> 
+MediatR
+AutoMapper
+Newtonsoft.Json
+
+-> go to Data folder
+=> 
+Dapper
+
+-> go to Core folder
+=>
+Microsoft.AspNetCore.Routing
+Newtonsoft.Json
+System.IdentityModel.Tokens.Jwt
+Microsoft.Extensions.Configuration
+
+
+## for db context migration ## 
+  ### for creating migrations
+-dotnet ef migrations add InitDatabase --project Model\LGED.Model\ -s Web\LGED.Web\ -c LgedDbContext --verbose
+
+  ### for updating db
+-dotnet ef database update InitDatabase --project Model\LGED.Model\ -s Web\LGED.Web\ -c LgedDbContext --verbose 
+
+  ### for removing db
+-dotnet ef migrations remove --project YourDataAccessLibraryName -s YourWebProjectName -c YourDbContextClassName --verbose
