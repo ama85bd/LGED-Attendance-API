@@ -11,6 +11,7 @@ using LGED.Domain.Commands.Admin.UserProfile;
 using LGED.Model.Common;
 using LGED.Model.Entities.Profile;
 using Microsoft.AspNetCore.Identity;
+using NetTopologySuite.Geometries;
 
 namespace LGED.Domain.Handlers.Admin.UserProfile
 {
@@ -48,10 +49,15 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
                     Description = command.Department,
                     ContactNumber = command.ContactNumber,
                     Department = command.Department,
-                    Location = command.Location,
+                    Latitude = command.Latitude,
+                    Longitude = command.Longitude,
+                    // SRID = command.SRID,
+                    Location = new Point(command.Longitude, command.Latitude) { SRID = 4326 },
+                    
                     Type = "N/A",
-                    IsActive = true
+                    IsActive = false
                 };
+                System.Console.WriteLine("company location ==================================system   "+company.Location);
                 compannyIdd=company.Id;
                 _unitOfWork.CompanyRepository.Add(_context, company);
             }else
@@ -79,6 +85,8 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
                     InsertedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow,
                     Remarks = command.Department,
+                    Designation = command.Designation,
+                    ProfileImage = command.UserImage,
                     IsActive = false,
                     IsReceiveIowEmails = true,
                     IsReceiveDataAnomEmails = true,
@@ -93,6 +101,8 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
                 user.DisplayName = command.DisplayName;
                 user.Email = command.Email;
                 user.PhoneNumber = command.ContactNumber;
+                user.Designation = command.Designation;
+                user.ProfileImage = command.UserImage;
 
                 identifyResult = await _userMan.UpdateAsync(user);
                 useIdd=user.Id;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LGED.Core.Interfaces;
 using LGED.Domain.Commands.Admin.UserProfile;
+using LGED.Domain.Models.Profile;
 using LGED.Model.Common;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LGED.Web.Controllers.UserController
 {
+    [Authorize]
     [ApiController]
     public class UserController : BaseController
     {
@@ -18,26 +20,28 @@ namespace LGED.Web.Controllers.UserController
         {
         }
 
-        [HttpPost("register")]
-        [ProducesResponseType(typeof(IApiResponse<bool>), 200)]
-        public async Task<ActionResult<bool>> Create(CreateUpdateUserCommand command)
+        /// <summary>
+        /// Get user info by user's id
+        /// </summary>
+        /// <param name="id"> User Guid</param>
+        /// <returns> User Info details include user ID, User email, list of Company with Role</returns>
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(IApiResponse<UserDetailModel>), 200)]
+        public async Task<IActionResult> GetUserInfoByUserId(Guid id)
         {
-            command.Id = Guid.NewGuid();
+            var command = new GetAllUserListByIdCommand { Id = id };
             return Ok(await _mediator.Send(command));
         }
 
-        [HttpPost("admin-register")]
-        [ProducesResponseType(typeof(IApiResponse<bool>), 200)]
-        public async Task<ActionResult<bool>> Create(CreateUpdateAdminUserRegisterCommand command)
-        {
-            command.Id = Guid.NewGuid();
-            return Ok(await _mediator.Send(command));
-        }
-        [AllowAnonymous]
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserLoginCommand command)
+        /// <summary>
+        /// Update User by id
+        /// </summary>
+        /// <returns>Update User by id</returns>
+        [HttpPut("UpdateUserById")]
+        public async Task<IActionResult> UpdateUserById(UpdateUserProfileByIdCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
+
     }
 }

@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using LGED.Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using NetTopologySuite.Geometries;
 
 namespace LGED.Model.Entities.Profile
 {
@@ -29,6 +31,12 @@ namespace LGED.Model.Entities.Profile
         public string UserType { get; set; } // Internal / External
         public string? StaffId { get; set; } //C0000026
         public string? Culture { get; set; } //Vietnam
+        public string? Designation { get; set; } //Vietnam
+        public byte[]? ProfileImage { get; set; } //Vietnam
+        
+        
+        [JsonIgnore]
+        public Point ? Location { get; set; }
         public DateTime? LastSyncFromAd { get; set; } //last date sync from active directory, each 7 days from new login
         public bool IsDeleted { get; set; }
         public Guid InsertedBy { get; set; }

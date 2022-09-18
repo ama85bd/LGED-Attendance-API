@@ -4,6 +4,7 @@ using LGED.Model.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 
@@ -12,9 +13,10 @@ using NetTopologySuite.Geometries;
 namespace LGED.Model.Migrations
 {
     [DbContext(typeof(LgedDbContext))]
-    partial class LgedDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220918092252_InitGeoDatabase")]
+    partial class InitGeoDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -185,9 +187,6 @@ namespace LGED.Model.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Culture")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Designation")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DisplayName")

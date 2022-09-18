@@ -9,6 +9,7 @@ namespace LGED.Domain.Models.Profile
     public class LoginCredentialModel: ViewModelBase
     {
         public string Token { get; set; }
+        public string UserRole { get; set; }
 
         public DateTime Expiration { get; set; }
     }

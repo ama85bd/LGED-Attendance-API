@@ -39,6 +39,9 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
 
             var useIdd = Guid.Empty;
 
+            var companyLocationofUser = _unitOfWork.CompanyRepository.GetQueryNoCached().Where(r => r.Name == command.Department)
+                    .FirstOrDefault()?.Location;
+
             if (user == null)
             {
                 var password = command.Password;
@@ -56,6 +59,9 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
                     InsertedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow,
                     Remarks = command.Department,
+                    Designation = command.Designation,
+                    ProfileImage = command.UserImage,
+                    Location = companyLocationofUser,
                     IsActive = false,
                     IsReceiveIowEmails = true,
                     IsReceiveDataAnomEmails = true,
@@ -71,6 +77,8 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
                 user.DisplayName = command.DisplayName;
                 user.Email = command.Email;
                 user.PhoneNumber = command.ContactNumber;
+                user.Designation = command.Designation;
+                user.ProfileImage = command.UserImage;
                 identifyResult = await _userMan.UpdateAsync(user);
                 useIdd=user.Id;
             }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using NetTopologySuite.Geometries;
@@ -13,8 +14,28 @@ namespace LGED.Model.Entities.Profile
         public bool IsActive { get; set; }
         public string Code { get; set; }
         
+        public double ? Latitude {get; set;}
+        public double ? Longitude {get; set;}
+        public int ? SRID {get; set;}
+        
         [JsonIgnore]
         public Point ? Location { get; set; }
+
+        // [DataContract]
+        // public class GeoLocation : NetTopologySuite.Geometries.Point
+        // {
+        //     const int GoogleMapsSRID = 4326 ;
+
+        //     public GeoLocation(double latitude, double longitude)
+        //         : base(x: longitude, y: latitude) =>
+        //         base.SRID = GoogleMapsSRID;
+
+        //     [DataMember]
+        //     public double Longitude => base.X;
+
+        //     [DataMember]
+        //     public double Latitude => base.Y;
+        // }
         
         public string? ShortName { get; set; }
         public string Description { get; set; }

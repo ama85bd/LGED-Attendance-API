@@ -43,6 +43,12 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
                 user = await _userManager.FindByNameAsync(command.Email);
             }
             
+            // Check user active
+            if (!user.IsActive)
+            {
+                throw new ApiException("You don't have permission to access LGED attendance system.", (int)HttpStatusCode.Unauthorized);
+            }
+            
             // Get all role
             if (user != null)
             {
@@ -60,13 +66,13 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
                 //not null
                 if (await _userManager.CheckPasswordAsync(user, command.Password))
                 {
-                    return await GetCredentialModel(user);
+                    return await GetCredentialModel(user, command);
                 }
                 throw new ApiException("Wrong password.", (int)HttpStatusCode.Unauthorized);
             
         }
 
-        private async Task<LoginCredentialModel> GetCredentialModel(User user)
+        private async Task<LoginCredentialModel> GetCredentialModel(User user,UserLoginCommand command)
         {
             //user claims
             var authClaims = new List<Claim>
@@ -76,16 +82,21 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             };
 
+            // var userRoleId = await _userManager.FindByNameAsync(command.Email);
+
             //role claims - to use with [Authorization(Roles)] or Context.User.IsInRole which is using the roles issued in the jwt token
             //we also provide the permission check using HasPermission which has called to database
             //see PermissionAuthorizationHandler at the Web layer for more detail
             //also can use UserManager.IsInRole, which is used database call to check role as well
             var userRoles = await _userManager.GetRolesAsync(user);
+            var GetUserRole = System.String.Empty;
+            
             foreach (var role in userRoles)
             {
                 authClaims.Add(new Claim(ClaimTypes.Role, role));
+                GetUserRole = role;
+                
             }
-
             //check whether master admin
             if (userRoles.Contains("Master Administrator"))
             {
@@ -99,7 +110,8 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
             {
                 Id = user.Id,
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
-                Expiration = token.ValidTo
+                Expiration = token.ValidTo,
+                UserRole = GetUserRole
             };
         }
     }
