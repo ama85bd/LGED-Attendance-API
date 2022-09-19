@@ -19,7 +19,7 @@ namespace LGED.Web.Extensions
             services.AddSwaggerGen(
                 c =>
                 {
-                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "LGED-API-v1", Version = "v1", Description = "API for LGED" });
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "LGED-API", Version = "v1", Description = "API for LGED attendance system" });
                     c.EnableAnnotations();
 
                     #region ADFS
