@@ -46,11 +46,11 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
             // Check user active
             if (!user.IsActive)
             {
-                throw new ApiException("You don't have permission to access LGED attendance system.", (int)HttpStatusCode.Unauthorized);
+                throw new ApiException("You don't have permission to access LGED attendance system. Not activated", (int)HttpStatusCode.Unauthorized);
             }
             
             // Get all role
-            if (user != null)
+            if (user != null && user.UserType !="Master Admin")
             {
                 var isAssigned = _unitOfWork.UserRolesRepository.Exist(where: r => r.UserId == user.Id);
                 if (!isAssigned) throw new ApiException("You don't have permission to access LGED attendance system.", (int)HttpStatusCode.Unauthorized);
@@ -111,7 +111,7 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
                 Id = user.Id,
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Expiration = token.ValidTo,
-                UserRole = GetUserRole
+                UserRole = user.UserType !="Master Admin" ? GetUserRole : "Master Admin"
             };
         }
     }

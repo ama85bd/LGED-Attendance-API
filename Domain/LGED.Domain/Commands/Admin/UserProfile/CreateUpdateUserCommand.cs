@@ -18,6 +18,7 @@ namespace LGED.Domain.Commands.Admin.UserProfile
         public byte[]? UserImage { get; set; }
         public string Password { get; set; }
         // [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "Email is not valid")]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         public string UserType { get; set; }
         [MaxLength(20)]

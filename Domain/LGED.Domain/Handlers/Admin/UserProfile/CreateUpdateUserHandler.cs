@@ -12,6 +12,7 @@ using LGED.Domain.Commands.Admin.UserProfile;
 using LGED.Model.Common;
 using LGED.Model.Entities.Profile;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace LGED.Domain.Handlers.Admin.UserProfile
 {
@@ -100,29 +101,35 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
                     .FirstOrDefault()?.Id.ToString();
             var companyIdofUser = _unitOfWork.CompanyRepository.GetQueryNoCached().Where(r => r.Name == command.Department)
                     .FirstOrDefault()?.Id.ToString();
-            // System.Console.WriteLine("isMasterAdmin ==================================system   "+isMasterAdmin);
-            // System.Console.WriteLine("roleIdofUser ==================================system   "+roleIdofUser);
-            // System.Console.WriteLine("companyIdofUser ==================================system   "+companyIdofUser);
+            System.Console.WriteLine("isMasterAdmin ==================================system   "+isMasterAdmin);
+            System.Console.WriteLine("roleIdofUser ==================================system   "+roleIdofUser);
+            System.Console.WriteLine("companyIdofUser ==================================system   "+companyIdofUser);
             
             if (isMasterAdmin == "Master Admin")
             {
                 // remove old roles
-                var userRoles =  _unitOfWork.UserRolesRepository.GetQueryNoCached().Where(r => r.UserId == userId)
-                    .ToList();
+                var userRoles = await _unitOfWork.UserRolesRepository.GetQueryNoCached().Where(r => r.UserId == userId)
+                    .ToListAsync();
+            System.Console.WriteLine("userRoles ==================================system   "+userRoles);
                 foreach (var r in userRoles)
                 {
                     _unitOfWork.UserRolesRepository.Remove(r);
                 }
 
                 // assign master admin for all companies
-                var companyId = _unitOfWork.CompanyRepository.GetQueryNoCached().Select(c => c.Id).ToList();
+                var companyId = _unitOfWork.CompanyRepository.GetQueryNoCached().Select(c => c.Id).ToListAsync().Result;
+                
                 foreach (var userRole in companyId.Select(comGuid => new UserRoles
                 {
+                    
                     RoleId = new Guid(roleIdofUser),
                     CompanyId = comGuid,
                     UserId = userId
                 }))
                 {
+            System.Console.WriteLine("userRole ==================================system   "+userRole.RoleId);
+            System.Console.WriteLine("userRole ==================================system   "+userRole.CompanyId);
+            System.Console.WriteLine("userRole ==================================system   "+userRole.UserId);
                     _unitOfWork.UserRolesRepository.Add(_context, userRole);
                 }
             }
