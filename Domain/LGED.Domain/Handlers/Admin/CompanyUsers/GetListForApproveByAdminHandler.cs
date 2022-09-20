@@ -1,0 +1,42 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
+using LGED.Core.Interfaces;
+using LGED.Data.Base;
+using LGED.Domain.Base;
+using LGED.Domain.Commands.Admin.CompanyUsers;
+using LGED.Domain.Models.Profile;
+using Microsoft.EntityFrameworkCore;
+
+namespace LGED.Domain.Handlers.Admin.CompanyUsers
+{
+    public class GetListForApproveByAdminHandler : HandlerBase<GetListForApproveByAdminCommand, List<GetApproveByMasterAdminModel>>
+    {
+        public GetListForApproveByAdminHandler(IUnitOfWork unitOfWork, IUserContext context, IMapper mapper) : base(unitOfWork, context, mapper)
+        {
+        }
+
+        public override async Task<List<GetApproveByMasterAdminModel>> Handle(GetListForApproveByAdminCommand command, CancellationToken cancellationToken)
+        {
+            var result = await (from user in _unitOfWork.UserRepository.GetQueryNoCached() 
+                        join userRole in _unitOfWork.UserRolesRepository.GetQueryNoCached() on user.Id equals userRole.UserId  
+                        join comp in _unitOfWork.CompanyRepository.GetQueryNoCached()  on userRole.CompanyId equals comp.Id                     
+                        where user.IsActive == false && comp.Id == _context.CurrentCompanyId
+                          orderby user.DisplayName
+                          select new GetApproveByMasterAdminModel
+                          {
+                              UserId = user.Id,
+                              CompanyId = comp.Id,
+                              UserName = user.DisplayName,
+                              UserType = user.UserType,
+                              UserEmail = user.Email,
+                              CompanyName = comp.Name
+
+                          }).Distinct().ToListAsync(cancellationToken);
+
+                          return result;
+        }
+    }
+}

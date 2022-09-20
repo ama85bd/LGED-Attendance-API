@@ -21,6 +21,17 @@ namespace LGED.Web.Controllers.UserController
         }
 
         /// <summary>
+        /// Get All User List
+        /// </summary>
+        /// <returns>Get All User List</returns>
+        [HttpGet("GetAllUserList")]
+        public async Task<IActionResult> GetAllUserList()
+        {
+            var command = new GetAllApprovedAdminListCommand();
+            return Ok(await _mediator.Send(command));
+        }
+
+        /// <summary>
         /// Get user info by user's id
         /// </summary>
         /// <param name="id"> User Guid</param>

@@ -21,9 +21,9 @@ namespace LGED.Core.Constants
         /// </summary>
         public static class HttpHeader
         {
-            public const string CDBM_TENANT_HEADER = "x-cdbm-tenant";
-            public const string CDBM_AREA_HEADER = "x-cdbm-area";
-            public const string CDBM_COMPANY_ID_HEADER = "x-cdbm-company-id";
+            public const string LGED_TENANT_HEADER = "x-lged-tenant";
+            public const string LGED_AREA_HEADER = "x-lged-area";
+            public const string LGED_COMPANY_ID_HEADER = "x-lged-company-id";
         }
 
         public static class ComponentStatus
@@ -71,7 +71,7 @@ namespace LGED.Core.Constants
         /// </summary>
         public static class MasterDataType
         {
-            //CDBM
+            //lged
             public const string Objectives = "Objectives";
             public const string FacilitiesStatus = "FacilitiesStatus";
             public const string PetronasTechnicalStandard = "PetronasTechnicalStandard";

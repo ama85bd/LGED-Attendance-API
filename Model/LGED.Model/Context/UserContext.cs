@@ -61,7 +61,7 @@ namespace LGED.Model.Context
             {
                 var companyId = Guid.Empty;
                 var compId = HttpContextAccessor.HttpContext.Request
-                    .Headers[AppConstants.HttpHeader.CDBM_COMPANY_ID_HEADER]
+                    .Headers[AppConstants.HttpHeader.LGED_COMPANY_ID_HEADER]
                     .FirstOrDefault();
                 if (compId != null)
                 {

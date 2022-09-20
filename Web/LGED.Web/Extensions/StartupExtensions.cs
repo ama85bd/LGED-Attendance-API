@@ -123,7 +123,7 @@ namespace LGED.Web.Extensions
                 parameter.Required |= !routeInfo.IsOptional;
             }
 
-            operation.Parameters.Add(HeaderParam(AppConstants.HttpHeader.CDBM_COMPANY_ID_HEADER, false, "Current user's company id."));
+            operation.Parameters.Add(HeaderParam(AppConstants.HttpHeader.LGED_COMPANY_ID_HEADER, false, "Current user's company id."));
         }
 
         private static OpenApiParameter HeaderParam(string name, bool required = true, string description = "")

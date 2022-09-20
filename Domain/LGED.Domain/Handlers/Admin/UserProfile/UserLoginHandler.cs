@@ -91,6 +91,9 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
             var userRoles = await _userManager.GetRolesAsync(user);
             var GetUserRole = System.String.Empty;
             
+            var companyIdofUser = _unitOfWork.UserRolesRepository.GetQueryNoCached().Where(r => r.UserId == user.Id)
+                    .FirstOrDefault()?.CompanyId.ToString();
+
             foreach (var role in userRoles)
             {
                 authClaims.Add(new Claim(ClaimTypes.Role, role));
@@ -111,7 +114,8 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
                 Id = user.Id,
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Expiration = token.ValidTo,
-                UserRole = user.UserType !="Master Admin" ? GetUserRole : "Master Admin"
+                UserRole = user.UserType !="Master Admin" ? GetUserRole : "Master Admin",
+                CompanyId = companyIdofUser
             };
         }
     }

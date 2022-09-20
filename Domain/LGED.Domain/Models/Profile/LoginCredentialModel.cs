@@ -10,6 +10,7 @@ namespace LGED.Domain.Models.Profile
     {
         public string Token { get; set; }
         public string UserRole { get; set; }
+        public string CompanyId { get; set; }
 
         public DateTime Expiration { get; set; }
     }

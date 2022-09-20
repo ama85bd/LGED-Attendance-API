@@ -101,16 +101,16 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
                     .FirstOrDefault()?.Id.ToString();
             var companyIdofUser = _unitOfWork.CompanyRepository.GetQueryNoCached().Where(r => r.Name == command.Department)
                     .FirstOrDefault()?.Id.ToString();
-            System.Console.WriteLine("isMasterAdmin ==================================system   "+isMasterAdmin);
-            System.Console.WriteLine("roleIdofUser ==================================system   "+roleIdofUser);
-            System.Console.WriteLine("companyIdofUser ==================================system   "+companyIdofUser);
+            // System.Console.WriteLine("isMasterAdmin ==================================system   "+isMasterAdmin);
+            // System.Console.WriteLine("roleIdofUser ==================================system   "+roleIdofUser);
+            // System.Console.WriteLine("companyIdofUser ==================================system   "+companyIdofUser);
             
             if (isMasterAdmin == "Master Admin")
             {
                 // remove old roles
                 var userRoles = await _unitOfWork.UserRolesRepository.GetQueryNoCached().Where(r => r.UserId == userId)
                     .ToListAsync();
-            System.Console.WriteLine("userRoles ==================================system   "+userRoles);
+            // System.Console.WriteLine("userRoles ==================================system   "+userRoles);
                 foreach (var r in userRoles)
                 {
                     _unitOfWork.UserRolesRepository.Remove(r);
@@ -127,9 +127,9 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
                     UserId = userId
                 }))
                 {
-            System.Console.WriteLine("userRole ==================================system   "+userRole.RoleId);
-            System.Console.WriteLine("userRole ==================================system   "+userRole.CompanyId);
-            System.Console.WriteLine("userRole ==================================system   "+userRole.UserId);
+            // System.Console.WriteLine("userRole ==================================system   "+userRole.RoleId);
+            // System.Console.WriteLine("userRole ==================================system   "+userRole.CompanyId);
+            // System.Console.WriteLine("userRole ==================================system   "+userRole.UserId);
                     _unitOfWork.UserRolesRepository.Add(_context, userRole);
                 }
             }

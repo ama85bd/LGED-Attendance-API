@@ -42,25 +42,16 @@ namespace LGED.Web.Controllers.MasterAdminController
             return Ok(await _mediator.Send(command));
         }
 
-        /// <summary>
-        /// Get Approve by Master Admin List
-        /// </summary>
-        /// <returns>Get Approve by Master Admin List</returns>
-        [HttpGet("GetApproveByMasterAdminList/")]
-        public async Task<IActionResult> GetApproveByMasterAdminList()
-        {
-            var command = new GetApproveByMasterAdminCommand();
-            return Ok(await _mediator.Send(command));
-        }
 
         /// <summary>
-        /// Get All Approved Admin List
+        /// Request Access List
         /// </summary>
-        /// <returns>Get All Approved Admin List</returns>
-        [HttpGet("GetAllApprovedAdminList/")]
-        public async Task<IActionResult> GetAllApprovedAdminList()
+        /// <returns>Request Access List</returns>
+        
+        [HttpGet("RequestAccessList")]
+        public async Task<IActionResult> GetRequestAccessList()
         {
-            var command = new GetAllApprovedAdminListCommand();
+            var command = new GetApproveByMasterAdminCommand();
             return Ok(await _mediator.Send(command));
         }
 
