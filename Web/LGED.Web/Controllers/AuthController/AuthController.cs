@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LGED.Core.Interfaces;
+using LGED.Domain.Commands.Admin.Company;
 using LGED.Domain.Commands.Admin.UserProfile;
 using LGED.Model.Common;
 using MediatR;
@@ -17,6 +18,18 @@ namespace LGED.Web.Controllers.AuthController
         public AuthController(ILogger<BaseController> logger, IMediator mediator, IUserContext context, LgedUserManager userMan) : base(logger, mediator, context, userMan)
         {
         }
+        
+        /// <summary>
+        /// Get Company List
+        /// </summary>
+        /// <returns>List of Company </returns>
+        [HttpGet("GetAllCompanies/")]
+        public async Task<IActionResult> GetAllCompanys()
+        {
+            var command = new GetCompanyListCommand();
+            return Ok(await _mediator.Send(command));
+        }
+
 
         /// <summary>
         /// Register for normal user
@@ -36,7 +49,7 @@ namespace LGED.Web.Controllers.AuthController
         /// <returns>Register for admin user</returns>
         [HttpPost("admin-register")]
         [ProducesResponseType(typeof(IApiResponse<bool>), 200)]
-        public async Task<ActionResult<bool>> Create(CreateUpdateAdminUserRegisterCommand command)
+        public async Task<ActionResult<bool>> CreateAdminandCompany(CreateUpdateAdminUserRegisterCommand command)
         {
             command.Id = Guid.NewGuid();
             return Ok(await _mediator.Send(command));

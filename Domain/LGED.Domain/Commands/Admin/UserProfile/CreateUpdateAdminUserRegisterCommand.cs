@@ -24,10 +24,10 @@ namespace LGED.Domain.Commands.Admin.UserProfile
         public string UserType { get; set; }
         public string Designation { get; set; }
         public byte[]? UserImage { get; set; }
+        
         [MaxLength(20)]
         public string ContactNumber { get; set; }
-        // [JsonIgnore]
-        // public GeoLocation? Location { get; set; }
+        
 
         public double Latitude {get; set;}
         public double Longitude {get; set;}

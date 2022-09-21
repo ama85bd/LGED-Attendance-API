@@ -31,17 +31,6 @@ namespace LGED.Web.Controllers.MasterAdminController
             return Ok(await _mediator.Send(command));
         }
 
-        /// <summary>
-        /// Get Company List
-        /// </summary>
-        /// <returns>List of Company </returns>
-        [HttpGet("GetAllCompanies/")]
-        public async Task<IActionResult> GetAllCompanys()
-        {
-            var command = new GetCompanyListCommand();
-            return Ok(await _mediator.Send(command));
-        }
-
 
         /// <summary>
         /// Request Access List
