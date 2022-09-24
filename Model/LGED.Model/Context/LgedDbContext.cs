@@ -24,5 +24,6 @@ namespace LGED.Model.Context
 
         public DbSet<Company> Company { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<TestStudent> TestStudent { get; set; }
     }
 }
