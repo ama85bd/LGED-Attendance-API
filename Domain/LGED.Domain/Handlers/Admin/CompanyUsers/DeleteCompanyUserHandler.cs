@@ -45,7 +45,7 @@ namespace LGED.Domain.Handlers.Admin.CompanyUsers
             if(isAdmin != "Admin" || userRoleRepoComId.CompanyId !=_context.CurrentCompanyId 
             || userRoleRepoComId.CompanyId !=adminUserRoleRepo.CompanyId)
             {
-                throw new ApiException("You cannot delete this user", (int)HttpStatusCode.NotFound);
+                throw new ApiException("You cannot delete this user", (int)HttpStatusCode.BadRequest);
             }
 
             if (user != null && userRoleRepo != null)

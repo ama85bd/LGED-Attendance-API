@@ -10,6 +10,7 @@ using LGED.Domain.Base;
 using LGED.Domain.Commands.Admin.LocationChanges;
 using LGED.Model.Common;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace LGED.Domain.Handlers.Admin.LocationChanges
 {
@@ -32,6 +33,16 @@ namespace LGED.Domain.Handlers.Admin.LocationChanges
             var company = await _unitOfWork.CompanyRepository.GetByIdAsync(_context.CurrentCompanyId);
 
             IdentityResult identifyUserResult;
+
+            var adminUserRoleRepo = await _unitOfWork.UserRolesRepository.GetQueryNoCached().Where(r => r.UserId == _context.UserId).FirstOrDefaultAsync();
+            var isAdmin = _unitOfWork.RoleRepository.GetQueryNoCached().Where(r => r.Id == adminUserRoleRepo.RoleId)
+                    .FirstOrDefault()?.Name;
+            
+
+            if(isAdmin != "Admin" || adminUserRoleRepo.CompanyId !=_context.CurrentCompanyId )
+            {
+                throw new ApiException("You have no permission for this action", (int)HttpStatusCode.BadRequest);
+            }
             
             if (company == null)
             {

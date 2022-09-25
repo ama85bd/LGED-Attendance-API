@@ -21,6 +21,18 @@ namespace LGED.Web.Controllers.AdminController
         }
 
         /// <summary>
+        /// Get Approved User List
+        /// </summary>
+        /// <returns>Get Approved User List</returns>
+        
+        [HttpGet("GetApproveUserList")]
+        public async Task<IActionResult> GetApproveUserList()
+        {
+            var command = new GetApproveUserListCommand();
+            return Ok(await _mediator.Send(command));
+        }
+
+        /// <summary>
         /// Request Access List
         /// </summary>
         /// <returns>Request Access List</returns>
@@ -56,11 +68,22 @@ namespace LGED.Web.Controllers.AdminController
         }
         
         /// <summary>
+        /// Assign Custom Location To User
+        /// </summary>
+        /// <returns>Assign Custom Location To User</returns>
+
+        [HttpPost("AssignCustomLocationToUser")]
+        public async Task<IActionResult> AssignCustomLocationToUser(AssignCustomLocationToUserCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+        }
+        
+        /// <summary>
         /// User Location Assign To Admin Location
         /// </summary>
         /// <returns>User Location Assign To Admin Location</returns>
 
-        [HttpPost("userLocationAssignToAdminLocation")]
+        [HttpPost("AdminLocationAssignToUserLocation")]
         public async Task<IActionResult> UserLocationAssignToAdminLocation(UserLocationSameAsAdminLocationCommand command)
         {
             return Ok(await _mediator.Send(command));

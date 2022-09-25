@@ -30,6 +30,16 @@ namespace LGED.Domain.Handlers.Admin.LocationChanges
             var user =  _unitOfWork.UserRepository.GetQueryNoCached().Where(r => r.Id == item.UserId);
             System.Console.WriteLine("item item item ==================================system   "+user);
             }
+
+            var adminUserRoleRepo = await _unitOfWork.UserRolesRepository.GetQueryNoCached().Where(r => r.UserId == _context.UserId).FirstOrDefaultAsync();
+            var isAdmin = _unitOfWork.RoleRepository.GetQueryNoCached().Where(r => r.Id == adminUserRoleRepo.RoleId)
+                    .FirstOrDefault()?.Name;
+            
+
+            if(isAdmin != "Admin" || adminUserRoleRepo.CompanyId !=_context.CurrentCompanyId )
+            {
+                throw new ApiException("You have no permission for this action", (int)HttpStatusCode.BadRequest);
+            }
             
             if(company != null)
             {

@@ -9,6 +9,7 @@ using LGED.Data.Base;
 using LGED.Domain.Base;
 using LGED.Domain.Commands.Admin.UserProfile;
 using LGED.Model.Entities.Profile;
+using Microsoft.EntityFrameworkCore;
 
 namespace LGED.Domain.Handlers.Admin.UserProfile
 {
@@ -29,6 +30,15 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
 
             };
 
+            var isAdmin = _unitOfWork.UserRepository.GetQueryNoCached().Where(r => r.Id == _context.UserId)
+                    .FirstOrDefault()?.UserType;
+
+
+            if(isAdmin != "Master Admin" )
+            {
+                throw new ApiException("You have no permission for this action", (int)HttpStatusCode.BadRequest);
+            }
+            
             var roleInDb = _unitOfWork.RoleRepository.GetById(command.Id);
 
             if (roleInDb == null) { _unitOfWork.RoleRepository.Add(_context, e); }

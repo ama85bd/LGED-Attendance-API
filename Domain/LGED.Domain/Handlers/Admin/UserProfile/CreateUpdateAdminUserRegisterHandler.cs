@@ -39,7 +39,17 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
 
             var compannyName = _unitOfWork.CompanyRepository.GetQueryNoCached().Where(r => r.Name == command.Department)
                     .FirstOrDefault()?.Name;
-            
+            var compannyIdGet = _unitOfWork.CompanyRepository.GetQueryNoCached().Where(r => r.Name == command.Department)
+                    .FirstOrDefault()?.Id;
+            var roleId = _unitOfWork.RoleRepository.GetQueryNoCached().Where(r => r.Name == "Admin")
+                    .FirstOrDefault()?.Id.ToString();
+            var isAdminHas = _unitOfWork.UserRolesRepository.GetQueryNoCached().Where(r =>  r.CompanyId == compannyIdGet)
+            .FirstOrDefault()?.RoleId.ToString().Contains(roleId);
+
+            if( (bool)isAdminHas){
+                throw new ApiException("One admin user already exist in this company", (int)HttpStatusCode.Conflict);
+            }
+
             if(compannyName == null && command.UserType == "Admin")
             {
                 var company = new Model.Entities.Profile.Company
@@ -63,7 +73,7 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
                 _unitOfWork.CompanyRepository.Add(_context, company);
             }else
             {
-                throw new ApiException("The company already exist", (int)HttpStatusCode.NotFound);
+                throw new ApiException("The company already exist", (int)HttpStatusCode.Conflict);
             }
             
 

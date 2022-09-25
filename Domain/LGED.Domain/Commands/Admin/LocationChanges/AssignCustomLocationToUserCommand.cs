@@ -6,10 +6,11 @@ using LGED.Domain.Base;
 
 namespace LGED.Domain.Commands.Admin.LocationChanges
 {
-    public class UpdateCompanyLocationCommand : CommandBase<bool>
+    public class AssignCustomLocationToUserCommand : CommandBase<bool>
     {
-        
+        public Guid UserId { get; set; }
         public double Latitude {get; set;}
         public double Longitude {get; set;}
+        
     }
 }

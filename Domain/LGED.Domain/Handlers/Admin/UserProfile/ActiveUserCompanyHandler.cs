@@ -10,6 +10,7 @@ using LGED.Domain.Base;
 using LGED.Domain.Commands.Admin.UserProfile;
 using LGED.Model.Common;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace LGED.Domain.Handlers.Admin.UserProfile
 {
@@ -32,9 +33,24 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
             var company = await _unitOfWork.CompanyRepository.GetByIdAsync(command.CompanyId);
             var userActive =  user.IsActive;
             var companyActive =  company.IsActive;
+           
 
             IdentityResult identifyUserResult;
             IdentityResult identifyCompanyResult;
+
+            
+            // var adminUserRoleRepo = await _unitOfWork.UserRolesRepository.GetQueryNoCached().Where(r => r.UserId == _context.UserId).FirstOrDefaultAsync();
+            var isAdmin = _unitOfWork.UserRepository.GetQueryNoCached().Where(r => r.Id == _context.UserId)
+                    .FirstOrDefault()?.UserType;
+            // System.Console.WriteLine("adminUserRoleRepo =========================Id   "+adminUserRoleRepo);
+            // System.Console.WriteLine("isAdmin =========================Id   "+isAdmin);
+
+
+
+            if(isAdmin != "Master Admin" )
+            {
+                throw new ApiException("You have no permission for this action", (int)HttpStatusCode.BadRequest);
+            }
 
             if (user != null)
             {

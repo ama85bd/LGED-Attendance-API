@@ -31,6 +31,16 @@ namespace LGED.Web.Controllers.MasterAdminController
             return Ok(await _mediator.Send(command));
         }
 
+        /// <summary>
+        /// Get All Admin User List
+        /// </summary>
+        /// <returns>Get All Admin User List</returns>
+        [HttpGet("GetAllAdminUserList")]
+        public async Task<IActionResult> GetAllUserList()
+        {
+            var command = new GetAllApprovedAdminListCommand();
+            return Ok(await _mediator.Send(command));
+        }
 
         /// <summary>
         /// Request Access List
