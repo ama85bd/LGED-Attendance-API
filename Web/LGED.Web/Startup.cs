@@ -220,12 +220,12 @@ else
             
             app.UseAuthentication();
 
-            // app.UseStaticFiles(new StaticFileOptions
-            // {
-            //     FileProvider = new PhysicalFileProvider(
-            //         Path.Combine(env.ContentRootPath, "E:\\Images\\")),
-            //     RequestPath = "/Images"
-            // });
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, "E:\\Images\\")),
+                RequestPath = "/Images"
+            });
 
             // Enable custom middle ware for wrapping response, binding user context, and handling exception
             // Must placed after authentication and before authorization to bind user context
