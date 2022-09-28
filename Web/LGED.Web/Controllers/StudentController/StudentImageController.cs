@@ -42,29 +42,29 @@ namespace LGED.Web.Controllers.StudentController
         {
             string CurrentYear = DateTime.Now.Year.ToString();
             string CurrentMonth = DateTime.Now.ToString("MMMM");
-            if(!Directory.Exists("F:\\Images\\" + CurrentYear))
+            if(!Directory.Exists("E:\\Images\\" + CurrentYear))
             {
-                Directory.CreateDirectory("F:\\Images\\" + CurrentYear); 
+                Directory.CreateDirectory("E:\\Images\\" + CurrentYear); 
                 
             }
-            if(!Directory.Exists("F:\\Images\\" + CurrentYear + "\\" + CurrentMonth))
+            if(!Directory.Exists("E:\\Images\\" + CurrentYear + "\\" + CurrentMonth))
             {
-                Directory.CreateDirectory("F:\\Images\\" + CurrentYear + "\\" + CurrentMonth);
+                Directory.CreateDirectory("E:\\Images\\" + CurrentYear + "\\" + CurrentMonth);
             }
-            if(!Directory.Exists("F:\\Images\\" + CurrentYear + "\\" + CurrentMonth + "\\" + "In"))
+            if(!Directory.Exists("E:\\Images\\" + CurrentYear + "\\" + CurrentMonth + "\\" + "In"))
             {
-                Directory.CreateDirectory("F:\\Images\\" + CurrentYear + "\\" + CurrentMonth + "\\" + "In");
+                Directory.CreateDirectory("E:\\Images\\" + CurrentYear + "\\" + CurrentMonth + "\\" + "In");
             }
-            if(!Directory.Exists("F:\\Images\\" + CurrentYear + "\\" + CurrentMonth + "\\" + "Out"))
+            if(!Directory.Exists("E:\\Images\\" + CurrentYear + "\\" + CurrentMonth + "\\" + "Out"))
             {
-                Directory.CreateDirectory("F:\\Images\\" + CurrentYear + "\\" + CurrentMonth + "\\" + "Out");
+                Directory.CreateDirectory("E:\\Images\\" + CurrentYear + "\\" + CurrentMonth + "\\" + "Out");
             }
             
             string imageName = new String(Path.GetFileNameWithoutExtension(imageFile.FileName).Take(10).ToArray()).Replace(' ', '_');
             imageName = DateTime.Now.ToString("ddMMyyyy") + Path.GetExtension(imageFile.FileName);
             // imageName = imageName+DateTime.Now.ToString("yymmdd") + Path.GetExtension(imageFile.FileName);
             // var imagePath = Path.Combine( _hostEnvironment.ContentRootPath,  "F:\\Images", imageName);
-            var imagePath = Path.Combine( _hostEnvironment.ContentRootPath, string.Concat("F:\\Images\\" , CurrentYear , "\\" , CurrentMonth) , imageName);
+            var imagePath = Path.Combine( _hostEnvironment.ContentRootPath, string.Concat("E:\\Images\\" , CurrentYear , "\\" , CurrentMonth) , imageName);
 
             System.Console.WriteLine("CurrentYear ==================================CurrentYear   "+CurrentYear);
             System.Console.WriteLine("CurrentMonth ==================================CurrentMonth   "+CurrentMonth);
