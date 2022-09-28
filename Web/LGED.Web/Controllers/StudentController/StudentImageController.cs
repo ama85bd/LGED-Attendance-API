@@ -9,6 +9,7 @@ using LGED.Model.Context;
 using LGED.Model.Entities.Student;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LGED.Web.Controllers.StudentController
 {
@@ -22,6 +23,27 @@ namespace LGED.Web.Controllers.StudentController
             _hostEnvironment = hostEnvironment;
             _dbContext = dbContext;
         }
+                
+        /// <summary>
+        /// Get student Image
+        /// </summary>
+        /// <returns>Get student Image student</returns>
+        [HttpGet("getstudentimage")]
+        public async Task<ActionResult<IEnumerable<StudentImage>>> GetStudentImages()
+        {
+             string CurrentYear = DateTime.Now.Year.ToString();
+            string CurrentMonth = DateTime.Now.ToString("MMMM");
+
+            return await _dbContext.StudentImage
+            .Select(x => new StudentImage(){
+                EmpId = x.EmpId,
+                EmpName = x.EmpName,
+                ImageName =x.ImageName,
+                ImageSrc = String.Format("{0}://{1}{2}/Images/{3}/{4}/In/{5}",Request.Scheme,Request.Host,Request.PathBase,CurrentYear,CurrentMonth,x.ImageName)
+                
+            })
+            .ToListAsync();
+        }
         
         /// <summary>
         /// Add student Image
@@ -33,6 +55,9 @@ namespace LGED.Web.Controllers.StudentController
         {
             studentImage.ImageName = await SaveImage(studentImage.ImageFile);
             _dbContext.StudentImage.Add(studentImage);
+            System.Console.WriteLine("studentImage ========================= "+studentImage);
+            System.Console.WriteLine("studentImage ImageName========================= "+studentImage.ImageName);
+
             await _dbContext.SaveChangesAsync();
             return Ok(StatusCode(201));
         }
@@ -42,29 +67,29 @@ namespace LGED.Web.Controllers.StudentController
         {
             string CurrentYear = DateTime.Now.Year.ToString();
             string CurrentMonth = DateTime.Now.ToString("MMMM");
-            if(!Directory.Exists("F:\\Images\\" + CurrentYear))
+            if(!Directory.Exists("E:\\Images\\" + CurrentYear))
             {
-                Directory.CreateDirectory("F:\\Images\\" + CurrentYear); 
+                Directory.CreateDirectory("E:\\Images\\" + CurrentYear); 
                 
             }
-            if(!Directory.Exists("F:\\Images\\" + CurrentYear + "\\" + CurrentMonth))
+            if(!Directory.Exists("E:\\Images\\" + CurrentYear + "\\" + CurrentMonth))
             {
-                Directory.CreateDirectory("F:\\Images\\" + CurrentYear + "\\" + CurrentMonth);
+                Directory.CreateDirectory("E:\\Images\\" + CurrentYear + "\\" + CurrentMonth);
             }
-            if(!Directory.Exists("F:\\Images\\" + CurrentYear + "\\" + CurrentMonth + "\\" + "In"))
+            if(!Directory.Exists("E:\\Images\\" + CurrentYear + "\\" + CurrentMonth + "\\" + "In"))
             {
-                Directory.CreateDirectory("F:\\Images\\" + CurrentYear + "\\" + CurrentMonth + "\\" + "In");
+                Directory.CreateDirectory("E:\\Images\\" + CurrentYear + "\\" + CurrentMonth + "\\" + "In");
             }
-            if(!Directory.Exists("F:\\Images\\" + CurrentYear + "\\" + CurrentMonth + "\\" + "Out"))
+            if(!Directory.Exists("E:\\Images\\" + CurrentYear + "\\" + CurrentMonth + "\\" + "Out"))
             {
-                Directory.CreateDirectory("F:\\Images\\" + CurrentYear + "\\" + CurrentMonth + "\\" + "Out");
+                Directory.CreateDirectory("E:\\Images\\" + CurrentYear + "\\" + CurrentMonth + "\\" + "Out");
             }
             
             string imageName = new String(Path.GetFileNameWithoutExtension(imageFile.FileName).Take(10).ToArray()).Replace(' ', '_');
             imageName = DateTime.Now.ToString("ddMMyyyy") + Path.GetExtension(imageFile.FileName);
             // imageName = imageName+DateTime.Now.ToString("yymmdd") + Path.GetExtension(imageFile.FileName);
             // var imagePath = Path.Combine( _hostEnvironment.ContentRootPath,  "F:\\Images", imageName);
-            var imagePath = Path.Combine( _hostEnvironment.ContentRootPath, string.Concat("F:\\Images\\" , CurrentYear , "\\" , CurrentMonth) , imageName);
+            var imagePath = Path.Combine( _hostEnvironment.ContentRootPath, string.Concat("E:\\Images\\" , CurrentYear , "\\" , CurrentMonth + "\\" + "In") , imageName);
 
             System.Console.WriteLine("CurrentYear ==================================CurrentYear   "+CurrentYear);
             System.Console.WriteLine("CurrentMonth ==================================CurrentMonth   "+CurrentMonth);

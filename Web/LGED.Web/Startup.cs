@@ -26,6 +26,7 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -197,6 +198,7 @@ namespace API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -218,6 +220,13 @@ else
             
             app.UseAuthentication();
 
+            // app.UseStaticFiles(new StaticFileOptions
+            // {
+            //     FileProvider = new PhysicalFileProvider(
+            //         Path.Combine(env.ContentRootPath, "E:\\Images\\")),
+            //     RequestPath = "/Images"
+            // });
+
             // Enable custom middle ware for wrapping response, binding user context, and handling exception
             // Must placed after authentication and before authorization to bind user context
             app.UseApiWrapperMiddleware(new ApiWrapperMiddlewareOptions
@@ -235,6 +244,8 @@ else
             });
 
             app.UseAuthorization();
+
+            
 
             app.UseSwagger();
 
