@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LGED.Data.Repository;
+using LGED.Data.Repository.Attendance;
 using LGED.Data.Repository.Profile;
 using LGED.Model.Context;
 
@@ -17,6 +18,7 @@ namespace LGED.Data.Base
         UserRolesRepository UserRolesRepository { get; }
         RoleRepository RoleRepository { get; }
         CompanyRepository CompanyRepository { get; }
+        AttendanceWithImageRepository AttendanceWithImageRepository { get; }
          bool Commit();
          Task<bool> CommitAsync();
 

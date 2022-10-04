@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using LGED.Data.Repository;
+using LGED.Data.Repository.Attendance;
 using LGED.Data.Repository.Profile;
 using LGED.Model.Context;
 using Microsoft.Data.SqlClient;
@@ -46,6 +47,11 @@ namespace LGED.Data.Base
           public CompanyRepository CompanyRepository
         {
             get { return _companyRepository ??= new CompanyRepository(LgedDbContext); }
+        }
+        private AttendanceWithImageRepository _attendanceWithImageRepository;
+          public AttendanceWithImageRepository AttendanceWithImageRepository
+        {
+            get { return _attendanceWithImageRepository ??= new AttendanceWithImageRepository(LgedDbContext); }
         }
 
 

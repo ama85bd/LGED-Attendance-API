@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LGED.Model.Entities.Attendance;
 using LGED.Model.Entities.Profile;
 using LGED.Model.Entities.Student;
 using Microsoft.AspNetCore.Identity;
@@ -24,7 +25,7 @@ namespace LGED.Model.Context
 
         public DbSet<Company> Company { get; set; }
         public DbSet<Student> Students { get; set; }
-        public DbSet<TestStudent> TestStudent { get; set; }
+        public DbSet<AttendanceWithImage> AttendanceWithImage { get; set; }
         public DbSet<StudentImage> StudentImage { get; set; }
     }
 }
