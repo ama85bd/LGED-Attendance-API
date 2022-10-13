@@ -33,6 +33,25 @@ namespace LGED.Web.Controllers.StudentController
         {
              string CurrentYear = DateTime.Now.Year.ToString();
             string CurrentMonth = DateTime.Now.ToString("MMMM");
+            int month = 11;
+            int year = 2017;
+
+            DateTime date = new DateTime(year, month, DateTime.Now.Day);
+
+            var now = DateTime.Now; // get the current DateTime 
+
+            //Get the number of days in the current month
+            int daysInMonth = DateTime.DaysInMonth (year, month); 
+                
+            //First day of the month is always 1
+            var firstDay = new DateTime(year,month,1).ToShortDateString(); 
+                
+            //Last day will be similar to the number of days calculated above
+            var lastDay = new DateTime(year,month,daysInMonth).ToShortDateString();
+
+            System.Console.WriteLine("date ========================= "+date.ToShortDateString());
+            System.Console.WriteLine("firstDay ========================= "+firstDay);
+            System.Console.WriteLine("lastDay ========================= "+lastDay);
 
             return await _dbContext.StudentImage
             .Select(x => new StudentImage(){

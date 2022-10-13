@@ -11,6 +11,7 @@ namespace LGED.Model.Entities.Attendance
     {
         public Guid? UserId { get; set; }
         public Guid? CompanyId { get; set; }
+        
         public DateTime? InTime { get; set; }
         public DateTime? OutTime { get; set; }
         public DateTime? P_Date { get; set; }

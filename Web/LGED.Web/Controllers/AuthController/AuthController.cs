@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using LGED.Core.Interfaces;
 using LGED.Domain.Commands.Admin.Company;
 using LGED.Domain.Commands.Admin.UserProfile;
+using LGED.Domain.Commands.Attendance;
 using LGED.Model.Common;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -65,5 +66,16 @@ namespace LGED.Web.Controllers.AuthController
         {
             return Ok(await _mediator.Send(command));
         }
+        
+        // /// <summary>
+        // /// Image
+        // /// </summary>
+        // /// <returns>Bool</returns>
+        // [AllowAnonymous]
+        // [HttpPost("UserImage")]
+        // public async Task<IActionResult> UserImage([FromForm]CreateUpdateAttendanceWithImageCommand command)
+        // {
+        //     return Ok(await _mediator.Send(command));
+        // }
     }
 }

@@ -11,9 +11,9 @@ namespace LGED.Domain.Models.Attendance
     {
         public Guid? UserId { get; set; }
         public Guid? CompanyId { get; set; }
-        public DateTime? InTime { get; set; }
-        public DateTime? OutTime { get; set; }
-        public DateTime? P_Date { get; set; }
+        public string? InTime { get; set; }
+        public string? OutTime { get; set; }
+        public string? P_Date { get; set; }
         public string? InImage { get; set; }
         public string? OutImage { get; set; }
 

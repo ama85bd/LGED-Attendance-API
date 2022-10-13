@@ -43,11 +43,14 @@ namespace LGED.Domain.Handlers.Admin.UserProfile
                     .FirstOrDefault()?.Id;
             var roleId = _unitOfWork.RoleRepository.GetQueryNoCached().Where(r => r.Name == "Admin")
                     .FirstOrDefault()?.Id.ToString();
+            if(compannyIdGet != null)
+            {
             var isAdminHas = _unitOfWork.UserRolesRepository.GetQueryNoCached().Where(r =>  r.CompanyId == compannyIdGet)
             .FirstOrDefault()?.RoleId.ToString().Contains(roleId);
 
             if( (bool)isAdminHas){
                 throw new ApiException("One admin user already exist in this company", (int)HttpStatusCode.Conflict);
+            }
             }
 
             if(compannyName == null && command.UserType == "Admin")

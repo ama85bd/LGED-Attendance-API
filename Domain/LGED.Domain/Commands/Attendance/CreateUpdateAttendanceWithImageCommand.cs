@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace LGED.Domain.Commands.Attendance
 {
-    public class CreateUpdateAttendanceWithImageCommand : CommandBase<AttendancePerDayModel>
+    public class CreateUpdateAttendanceWithImageCommand : CommandBase<bool>
     {
         public IFormFile? ImageFile { get; set; }
     }

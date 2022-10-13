@@ -45,6 +45,7 @@ namespace LGED.Domain.Handlers.Admin.CompanyUsers
                               CompanyId = comp.Id,
                               UserName = user.DisplayName,
                               UserType = user.UserType,
+                              Designation = user.Designation,
                               UserEmail = user.Email,
                               CompanyName = comp.Name
 

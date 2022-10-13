@@ -44,11 +44,13 @@ namespace LGED.Domain.Handlers.Admin.CompanyUsers
                               CompanyId = comp.Id,
                               UserName = user.DisplayName,
                               UserType = user.UserType,
+                              Designation = user.Designation,
+                              Latitude = user.Location.Coordinate.Y,
+                              Longitude = user.Location.Coordinate.X,
                               UserEmail = user.Email,
                               CompanyName = comp.Name
 
-                          }).Distinct().ToListAsync(cancellationToken);
-
+                          }).ToListAsync(cancellationToken);
                           return result;
         }
     }
